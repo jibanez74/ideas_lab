@@ -1,8 +1,25 @@
 //modules
 const express = require("express");
 const express_hb = require("express-handlebars");
+const mongoose = require("mongoose");
 
 const app = express();
+
+//connect to mongoose
+//remove warnings and use global promise
+mongoose.Promise = global.Promise;
+
+mongoose.connect("mongodb://localhost/ideasLabDB", {
+  useMongoClient: true
+}).then(() => {
+  console.log ("Mongoose is connected!");
+}).catch((err) => {
+  console.log(err);
+});
+
+//setup schema
+require("./models/Ideas");
+const Idea = mongoose.model("ideas");
 
 //setup for middleware
 //middleware for handlebars
