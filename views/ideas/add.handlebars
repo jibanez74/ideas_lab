@@ -1,0 +1,25 @@
+<section id="add-idea">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form action="/ideas" method="post" id="add-form">
+            <div class="form-group">
+              <label for="title"> Title </label>
+              <input required type="text" class="form-control" name="title" placeholder="title">
+            </div> <!-- form group title -->
+
+            <div class="form-group">
+              <label for="description"> Describe your idea here </label>
+              <textarea required rows="8" class="form-control" id="description" name="description"></textarea>
+            </div> <!-- form group for textarea -->
+
+            <button type="submit" class="btn btn-primary">
+              Save
+            </button>
+          </form>
+        </div> <!-- card body -->
+      </div> <!-- card -->
+    </div> <!-- col md 12 -->
+  </div> <!-- row -->
+</section> <!-- add idea form -->
