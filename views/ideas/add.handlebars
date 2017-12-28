@@ -1,12 +1,20 @@
 <section id="add-idea">
   <div class="row">
     <div class="col-md-12">
+      {{#each errors}}
+      <div class="alert alert-danger">
+        {{text}}
+      </div>
+      {{else}}
+
+      {{/each}}
+
       <div class="card">
         <div class="card-body">
           <form action="/ideas" method="post" id="add-form">
             <div class="form-group">
               <label for="title"> Title </label>
-              <input required type="text" class="form-control" name="title" placeholder="title">
+              <input id="title" required type="text" class="form-control" name="title" placeholder="title">
             </div> <!-- form group title -->
 
             <div class="form-group">

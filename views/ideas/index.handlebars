@@ -1,0 +1,19 @@
+<section id="ideas-section">
+  <h2>
+    Ideas List
+  </h2>
+
+  {{#each ideas}}
+  <div class="card mb-3 card-body bg-light text-dark">
+    <h3 class="card-title">
+      {{title}}
+    </h3>
+
+    <p class="card-text">
+      {{description}}
+    </p>
+  </div> <!-- card -->
+  {{else}}
+ 
+  {{/each}}
+</section>

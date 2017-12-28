@@ -1,16 +1,15 @@
-//bring in mongoose to create a schema for the ideas db
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//create the schema
+//ideas model
 const IdeaSchema = new Schema({
   title: {
     type: String,
     required: true
   },
-  details: {
+  description: {
     type: String,
-    required: true,
+    required: true
   },
   date: {
     type: Date,
