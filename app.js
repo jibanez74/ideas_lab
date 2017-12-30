@@ -79,7 +79,7 @@ app.get("/ideas/edit/:id", (req, res) => {
   });
 });
 
-//processing form section with the different methods
+//section containing req methods
 //process form with post to add a new idea to the db
 app.post("/ideas", (req, res) => {
   //simple form validation
@@ -127,6 +127,15 @@ app.put("/ideas/:id", (req, res) => {
     idea.save().then((idea) => {
       res.redirect("/ideas");
     });
+  });
+});
+
+//delete idea from db
+app.delete("/ideas/:id", (req, res) => {
+  Idea.remove({
+    _id: req.params.id
+  }).then(() => {
+    res.redirect("/ideas");
   });
 });
 
