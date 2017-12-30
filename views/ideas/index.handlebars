@@ -1,9 +1,7 @@
 <section id="ideas-section">
-  <h2>
-    Ideas List
-  </h2>
-
   {{#each ideas}}
+  <h2 class="mb-3"> Ideas List </h2>
+  
   <div class="card mb-3 card-body bg-light text-dark">
     <h3 class="card-title">
       {{title}}
@@ -12,6 +10,15 @@
     <p class="card-text">
       {{description}}
     </p>
+
+    <div class="btn-group">
+      <a href="/ideas/edit/{{id}}" class="btn btn-dark" role="button">
+        Edit Idea
+      </a>
+      <a href="#" class="btn btn-danger" role="button">
+        Delete Idea
+      </a>
+    </div>
   </div> <!-- card -->
   {{else}}
  

@@ -2,6 +2,7 @@
 const express = require("express");
 const hbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -34,6 +35,9 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
+//method-override middleware
+app.use(methodOverride("_method"));
+
 //app routes
 //index route
 app.get("/", (req, res) => {
@@ -63,7 +67,20 @@ app.get("/ideas", (req, res) => {
 app.get("/ideas/add", (req, res) => {
   res.render("ideas/add");
 });
-//process form with post
+
+//edit ideas route
+app.get("/ideas/edit/:id", (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  }).then((idea) => {
+    res.render("ideas/edit", {
+      idea: idea
+    });
+  });
+});
+
+//processing form section with the different methods
+//process form with post to add a new idea to the db
 app.post("/ideas", (req, res) => {
   //simple form validation
   let errors_msg = [];
@@ -95,6 +112,22 @@ app.post("/ideas", (req, res) => {
       res.redirect("/ideas");
     })
   }
+});
+
+//update ideas with put request
+app.put("/ideas/:id", (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  }).then((idea) => {
+    //update values
+    idea.title = req.body.title;
+    idea.description = req.body.description;
+
+    //save the new values
+    idea.save().then((idea) => {
+      res.redirect("/ideas");
+    });
+  });
 });
 
 //setup server
