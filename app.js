@@ -9,6 +9,10 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+//load external js files with routes for user and ideas
+const ideas_routes = require("./routes/routes_ideas");
+const users_routes = require("./routes/routes_user"); 
+
 //mongoose section with schema
 //connect to mongoose
 mongoose.Promise = global.Promise;
@@ -75,93 +79,13 @@ app.get("/about", (req, res) => {
   });
 });
 
-app.get("/ideas", (req, res) => {
-  Idea.find({}).sort({date: "desc"}).then((ideas) => {
-    res.render("ideas/index", {
-      ideas: ideas
-    });
-  });
-});
+//ideas routes
+app.use("/ideas", ideas_routes);
 
-//add idea route
-app.get("/ideas/add", (req, res) => {
-  res.render("ideas/add");
-});
+//users routes
+app.use("/users", users_routes);
 
-//edit ideas route
-app.get("/ideas/edit/:id", (req, res) => {
-  Idea.findOne({
-    _id: req.params.id
-  }).then((idea) => {
-    res.render("ideas/edit", {
-      idea: idea
-    });
-  });
-});
 
-//section containing req methods
-//process form with post to add a new idea to the db
-app.post("/ideas", (req, res) => {
-  //simple form validation
-  let errors_msg = [];
-
-  if (!req.body.title) {
-    errors_msg.push({
-      text: "Please write a title"
-    });
-  }
-
-  if (!req.body.description) {
-    errors_msg.push({
-      text: "Please write a description"
-    });
-  }
-
-  if (errors_msg.length > 0) {
-    req.flash("error_msg", "Please fill in the form correctly");
-    res.render("ideas/add", {
-      errors: errors_msg,
-      title: req.body.title,
-      description: req.body.description
-    });
-  } else {
-    const newUser = {
-      title: req.body.title,
-      description: req.body.description
-    }
-    new Idea(newUser).save().then(() => {
-      req.flash("success_msg", "New idea added to the data base");
-      res.redirect("/ideas");
-    });
-  }
-});
-
-//update ideas with put request
-app.put("/ideas/:id", (req, res) => {
-  Idea.findOne({
-    _id: req.params.id
-  }).then((idea) => {
-    //update values
-    idea.title = req.body.title;
-    idea.description = req.body.description;
-
-    //save the new values
-    idea.save().then((idea) => {
-      req.flash("success_msg", "Idea updated");
-      res.redirect("/ideas");
-    });
-  });
-});
-
-//delete idea from db
-app.delete("/ideas/:id", (req, res) => {
-  Idea.remove({
-    _id: req.params.id
-  }).then(() => {
-    req.flash("success_msg", "Idea was removed from the data base");
-    res.redirect("/ideas");
-  });
-});
 
 //setup server
 const port = 5000;
