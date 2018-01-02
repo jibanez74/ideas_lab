@@ -1,0 +1,14 @@
+<!-- verify for alerts -->
+{{#if success_msg}}
+<div class="alert alert-success text-center">
+  <p> {{success_msg}} </p>
+</div>
+{{/if}}
+
+{{#if error_msg}}
+<div class="alert alert-danger text-center">
+  <p>
+    {{error_msg}}
+  </p>
+</div>
+{{/if}}
