@@ -1,0 +1,77 @@
+<section id="register-section">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card card-body py-3">
+        <h2 class="card-title text-center">
+          Register!
+        </h2>
+
+        <form action="/users/register" method="post">
+        <div class="form-group">
+          <label for="register_name">
+            Your name
+          </label>
+
+          <input
+          type="text"
+          class="form-control"
+          id="register_name"
+          name="register_name"
+          required
+          minlength="2"
+          maxlength="25"
+          placeholder="type your name">
+        </div> <!-- form group -->
+
+          <div class="form-group">
+            <label for="register_email">
+              Email
+            </label>
+
+            <input
+            type="email"
+            required
+            id="register_email"
+            name="register_email"
+            class="form-control"
+            placeholder="enter your email address">
+          </div> <!-- form group for email -->
+
+          <div class="form-group">
+            <label for="register_password">
+              Password
+            </label>
+
+            <input
+            type="password"
+            id="register_password"
+            name="register_password"
+            class="form-control"
+            required
+            minlength="4"
+            placeholder="enter a password">
+          </div> <!-- form group password -->
+
+          <div class="form-group">
+            <label for="reenter_password">
+              Confirm Password
+            </label>
+            
+            <input
+            type="password"
+            id="reenter_password"
+            name="reenter_password"
+            class="form-control"
+            required
+            minlength="4"
+            placeholder="confirm password">
+          </div>
+
+          <button type="submit" id="register_submit" name="register_submit" class="btn btn-block btn-primary">
+            Register
+          </button>
+        </form>
+      </div> <!-- card -->
+    </div> <!-- col md 6 -->
+  </div> <!-- row -->
+</section>

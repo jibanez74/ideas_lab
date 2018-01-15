@@ -1,0 +1,40 @@
+<section id="login-section">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card card-body py-3">
+        <h2 class="card-title text-center">
+          Sign in
+        </h2>
+
+        <form method="post" action="/users/login">
+          <div class="form-group">
+            <label for="login_email"> Email </label>
+            <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+            placeholder="your email">
+          </div> <!-- form group -->
+
+          <div class="form-group">
+            <label for="login_password"> Password </label>
+            <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            minlength="4"
+            required
+            placeholder="your password">
+          </div> <!-- password form group -->
+
+          <button type="submit" class="btn btn-primary btn-block" id="login_submit" name="login_submit">
+            Sign in
+          </button>
+        </form>
+      </div> <!-- card -->
+    </div> <!-- col md 6 -->
+  </div> <!-- row -->
+</section>

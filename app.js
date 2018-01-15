@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
+const passport = require("passport");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -23,6 +24,9 @@ mongoose.connect("mongodb://localhost/ideasLabDev", {
 }).catch((err) => {
   console.log(err);
 });
+
+//load passport local strategy function
+require("./config/passport")(passport);
 
 //bring in schema
 require("./models/Idea");
@@ -54,11 +58,16 @@ app.use(session({
 //connect flash middleware
 app.use(flash());
 
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 //middleware for global variables
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
-  res.locals.errors = req.flash("errors");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
   next();
 });
 
@@ -84,8 +93,6 @@ app.use("/ideas", ideas_routes);
 
 //users routes
 app.use("/users", users_routes);
-
-
 
 //setup server
 const port = 5000;

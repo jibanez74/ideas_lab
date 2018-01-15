@@ -36,24 +36,24 @@ router.get("/edit/:id", (req, res) => {
 //process form with post to add a new idea to the db
 router.post("/", (req, res) => {
   //simple form validation
-  let errors_msg = [];
+  let errors = [];
 
   if (!req.body.title) {
-    errors_msg.push({
+    errors.push({
       text: "Please write a title"
     });
   }
 
   if (!req.body.description) {
-    errors_msg.push({
+    errors.push({
       text: "Please write a description"
     });
   }
 
-  if (errors_msg.length > 0) {
+  if (errors.length > 0) {
     req.flash("error_msg", "Please fill in the form correctly");
     res.render("ideas/add", {
-      errors: errors_msg,
+      errors: errors,
       title: req.body.title,
       description: req.body.description
     });
