@@ -2,6 +2,7 @@
 const express = require("express");
 const hbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const path = require("path");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
@@ -38,6 +39,9 @@ app.engine('handlebars', hbs({
   defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
+
+//static folder
+app.use(express.static(path.join(__dirname, "public")));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({

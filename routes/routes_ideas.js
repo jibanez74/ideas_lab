@@ -2,7 +2,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const {ensureAuthenticated} = require("../helpers/auth");
+const {
+  ensureAuthenticated
+} = require("../helpers/auth");
 
 //bring in schema
 require("../models/Idea");
@@ -10,7 +12,11 @@ const Idea = mongoose.model("ideas");
 
 //ideas route
 router.get("/", ensureAuthenticated, (req, res) => {
-  Idea.find({}).sort({date: "desc"}).then((ideas) => {
+  Idea.find({
+    user: req.user.id
+  }).sort({
+    date: "desc"
+  }).then((ideas) => {
     res.render("ideas/index", {
       ideas: ideas
     });
@@ -27,9 +33,14 @@ router.get("/edit/:id", ensureAuthenticated, (req, res) => {
   Idea.findOne({
     _id: req.params.id
   }).then((idea) => {
-    res.render("ideas/edit", {
-      idea: idea
-    });
+    if (idea.user != req.user.id) {
+      req.flash("error_msg", "YOU ARE NOT AUTHORIZED");
+      res.redirect("/ideas");
+    } else {
+      res.render("ideas/edit", {
+        idea: idea
+      });
+    }
   });
 });
 
@@ -61,7 +72,8 @@ router.post("/", ensureAuthenticated, (req, res) => {
   } else {
     const newUser = {
       title: req.body.title,
-      description: req.body.description
+      description: req.body.description,
+      user: req.user.id
     }
     new Idea(newUser).save().then(() => {
       req.flash("success_msg", "New idea added to the data base");
@@ -71,7 +83,7 @@ router.post("/", ensureAuthenticated, (req, res) => {
 });
 
 //update ideas with put request
-router.put("/:id",ensureAuthenticated, (req, res) => {
+router.put("/:id", ensureAuthenticated, (req, res) => {
   Idea.findOne({
     _id: req.params.id
   }).then((idea) => {
