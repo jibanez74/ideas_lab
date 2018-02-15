@@ -4,7 +4,7 @@
   "description": "A simple Express app to keep track of ideas for new projects",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "node app.js"
   },
   "author": "J.R Ibanez",
   "license": "MIT",

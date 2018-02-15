@@ -11,6 +11,9 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+//load db config file
+const using_db = require("./config/database");
+
 //load external js files with routes for user and ideas
 const ideas_routes = require("./routes/routes_ideas");
 const users_routes = require("./routes/routes_user"); 
@@ -18,7 +21,7 @@ const users_routes = require("./routes/routes_user");
 //mongoose section with schema
 //connect to mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/ideasLabDev", {
+mongoose.connect(using_db.mongoURI, {
   useMongoClient: true
 }).then(() => {
   console.log("Mongoose is now connected");
@@ -99,7 +102,7 @@ app.use("/ideas", ideas_routes);
 app.use("/users", users_routes);
 
 //setup server
-const port = 5000;
+const port = process.env.port || 5000;
 app.listen(port, () => {
   console.log(`Server is now listening on port ${port}`);
 });
